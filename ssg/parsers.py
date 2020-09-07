@@ -27,3 +27,10 @@ class Parser:
 
     def copy(path, source, dest):
         shutil.copy2(path, dest + "/" + source + "/" + path)
+
+
+class ResourceParser(Parser):
+    extensions = [".jpg", ".png", ".gif", ".css", ".html"]
+
+    def parse(path, source, dest):
+        super().copy(path, source, dest)
