@@ -2,23 +2,23 @@ from operator import contains
 import re
 from yaml import load
 from yaml.loader import FullLoader, FullLoader
-from _collections_abc import Mapping
+from collections.abc import Mapping
 
 
 class Content(Mapping):
-    __delimiter = "^(?:-|\+){3}\s*$"
+    __delimiter = r"^(?:-|\+){3}\s*$"
     __regex = re.compile()
     __delimiter += __regex + re.MULTILINE
 
     @classmethod
     def load(cls, string):
-        _.fm, content = Content.__regex.split(string, 2)
-        load(fm, Loader=FullLoader)
+        _, fm, content = cls.__regex.split(string, 2)
+        metadata = load(fm, Loader=FullLoader)
         return cls(metadata, content)
 
     def __init__(self, metadata, content):
         self.data = metadata
-        self.data += {"content": content}
+        self.data["content"] = content
 
     @property
     def body(self):
@@ -26,7 +26,7 @@ class Content(Mapping):
 
     @property
     def type(self):
-        return self.data["type"] if self.data.contains("type") else None
+        return self.data["type"] if "type" in self.data else None
 
     @property.setter
     def type(self, type):
@@ -39,7 +39,7 @@ class Content(Mapping):
         self.data.__iter__()
 
     def __len__(self):
-        self.data.__len__()
+        return len(self.data)
 
     def __repr__(self):
         data = {}
