@@ -7,8 +7,7 @@ from collections.abc import Mapping
 
 class Content(Mapping):
     __delimiter = r"^(?:-|\+){3}\s*$"
-    __regex = re.compile()
-    __delimiter += __regex + re.MULTILINE
+    __regex = re.compile(__delimiter, re.MULTILINE)
 
     @classmethod
     def load(cls, string):
@@ -28,7 +27,7 @@ class Content(Mapping):
     def type(self):
         return self.data["type"] if "type" in self.data else None
 
-    @property.setter
+    @type.setter
     def type(self, type):
         self.data["type"] = type
 
